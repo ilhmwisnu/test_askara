@@ -39,7 +39,7 @@ class CryptoDetailBloc extends Bloc<CryptoDetailEvent, CryptoDetailState> {
     }, onError: (e) {
       debugPrint(e.toString());
       emit(CryptoDetailState(
-          status: CryptoDetailStatus.error, exception: e.toString()));
+          status: CryptoDetailStatus.error, errorMessage: e.toString()));
     });
   }
 

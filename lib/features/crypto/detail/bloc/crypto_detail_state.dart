@@ -6,9 +6,9 @@ final class CryptoDetailState {
   const CryptoDetailState({
     this.status = CryptoDetailStatus.initial,
     this.data = const [],
-    this.exception,
+    this.errorMessage,
   });
   final CryptoDetailStatus status;
   final List<Crypto> data;
-  final String? exception;
+  final String? errorMessage;
 }
