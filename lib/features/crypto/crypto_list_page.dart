@@ -6,6 +6,8 @@ import 'package:test_askara/features/crypto/bloc/crypto_list_bloc.dart';
 import 'package:test_askara/features/crypto/bloc/crypto_list_event.dart';
 import 'package:test_askara/features/crypto/bloc/crypto_list_state.dart';
 
+import 'component/crypto_datatable.dart';
+
 class CryptoListPage extends StatefulWidget {
   const CryptoListPage({super.key});
 
@@ -31,43 +33,16 @@ class _CryptoListPageState extends State<CryptoListPage> {
             }
 
             if (state.status == CryptoListStatus.dataRecieved) {
-              return SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: DataTable(
-                  columns: [
-                    DataColumn(label: Text("Code")),
-                    DataColumn(label: Text("Last")),
-                    DataColumn(label: Text("Chg")),
-                    DataColumn(label: Text("Chg%")),
-                  ],
-                  rows: state.data.values.map(
-                    (crypto) {
-                      return DataRow(cells: [
-                        DataCell(
-                          Text(
-                            crypto.s!,
-                            style: TextStyle(color: Colors.orange.shade700),
-                          ),
-                          onTap: () async {
-                            context
-                                .read<CryptoListBloc>()
-                                .add(CryptoListUnsubscribe());
-                            await context.push("/crypto/${crypto.s!}");
+              return CryptoDataTable(
+                cryptoData: state.data.values.toList(),
+                onTap: (crypto) async {
+                  context.read<CryptoListBloc>().add(CryptoListUnsubscribe());
+                  await context.push("/crypto/${crypto.s!}");
 
-                            if (mounted) {
-                              context
-                                  .read<CryptoListBloc>()
-                                  .add(CryptoListSubscribe());
-                            }
-                          },
-                        ),
-                        DataCell(Text(crypto.p!)),
-                        DataCell(Text(crypto.dd!)),
-                        DataCell(Text("${crypto.dc}%")),
-                      ]);
-                    },
-                  ).toList(),
-                ),
+                  if (mounted) {
+                    context.read<CryptoListBloc>().add(CryptoListSubscribe());
+                  }
+                },
               );
             }
 

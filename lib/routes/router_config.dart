@@ -22,7 +22,7 @@ final GoRouter routerConfig = GoRouter(
               ..add(CryptoListSubscribe())
               ..add(CryptoListListenData());
           },
-          child: CryptoListPage(),
+          child: const CryptoListPage(),
         );
       },
     ),
@@ -34,7 +34,7 @@ final GoRouter routerConfig = GoRouter(
               CryptoDetailBloc(CryptoRepository(RemoteCryptoDataSource()), state.pathParameters['s']!)
                 ..add(CryptoDetailSubscribe())
                 ..add(CryptoDetailListenData()),
-          child: CryptoDetailPage(),
+          child: const CryptoDetailPage(),
         );
       },
     ),
